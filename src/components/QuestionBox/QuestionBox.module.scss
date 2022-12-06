@@ -1,0 +1,30 @@
+@import "../../styles/base.scss";
+
+main {
+  border: 2px solid $primary;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  margin: 50px auto;
+}
+
+h2 {
+  color: $primary;
+  margin: 0;
+}
+
+span {
+  font-size: 15px;
+}
+
+.question-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    width: 60%;
+    padding: 30px;
+  }
+}
