@@ -1,13 +1,16 @@
 @import "../../styles/base.scss";
 
 main {
-  border: 2px solid $primary;
-  border-radius: 10px;
-  padding: 20px;
   width: 90%;
   margin: 50px auto;
 }
 
+.inner-box {
+  border: 2px solid $primary;
+  border-radius: 10px;
+
+  padding: 20px;
+}
 h2 {
   color: $primary;
   margin: 0;
@@ -22,9 +25,44 @@ span {
   font-weight: 700;
 }
 
+.option {
+  display: flex;
+  align-items: center;
+  background-color: $light;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+
+  label {
+    font-size: 15px;
+  }
+}
+
+.btn-hold {
+  display: flex;
+  width: 100%;
+  // justify-content: flex-start;
+  margin-top: 10px;
+}
+
 @media screen and (min-width: 768px) {
   main {
-    width: 60%;
+    width: 70%;
     padding: 30px;
+  }
+  .inner-box {
+    border: 3px solid $primary;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main {
+    width: 50%;
+  }
+  .question-title {
+    font-size: 23px;
   }
 }
