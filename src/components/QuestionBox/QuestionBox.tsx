@@ -9,6 +9,7 @@ import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { FaCheckCircle } from "react-icons/fa";
 import Button from "../Button";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import Alert from "../Alert";
 
 let Questions: Array<QuestionType> = [
   {
@@ -62,6 +63,9 @@ const QuestionBox = () => {
   // const [selected, setSelected] = useState<OptionType>({});
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [isInCorrect, setIsInCorrect] = useState(false);
+  const [showNext, setShowNext] = useState(false);
 
   // const PickAnswer = (data: OptionType, index: number) => {
   //   if (data.isCorrect) {
@@ -85,20 +89,25 @@ const QuestionBox = () => {
   // };
 
   const PickAnswer = (data: OptionType, index: number) => {
+    setShowNext(true);
     if (data.isCorrect) {
       console.log("Initial", score);
 
-      return setScore(score + 1);
+      setScore(score + 1);
+      setIsCorrect(true);
 
       // return alert("Correct answer");
     } else {
       console.log("wrong answer", score);
+      setIsInCorrect(true);
 
       // return alert("wrong answer");
     }
   };
 
   const GoToPrevQuestion = useCallback(() => {
+    setIsCorrect(false);
+    setIsInCorrect(false);
     if (currentQuestion === 0) {
       return setCurrentQuestion(0);
     } else {
@@ -108,6 +117,9 @@ const QuestionBox = () => {
   }, [currentQuestion]);
 
   const GoToNextQuestion = useCallback(() => {
+    setIsCorrect(false);
+    setIsInCorrect(false);
+
     if (currentQuestion === Questions.length - 1) {
       alert("YOu've reached the end of the questions");
 
@@ -123,6 +135,8 @@ const QuestionBox = () => {
   // }, []);
   return (
     <main>
+      {isCorrect ? <Alert text="Correct!!!" status="success" /> : null}
+      {isInCorrect ? <Alert text="Wrong answer" status="failed" /> : null}
       {showScore ? (
         <h1>
           You scored {score} out of {Questions.length}
@@ -201,7 +215,7 @@ const QuestionBox = () => {
                         marginRight: "15px",
                         border: "1px solid #f0f2f7",
                       }}
-                      onClick={() => PickAnswer(item, index)}
+                      onChange={() => PickAnswer(item, index)}
                     />
 
                     <label htmlFor={item.value}>{item.value}</label>
@@ -217,18 +231,27 @@ const QuestionBox = () => {
               <MdKeyboardArrowLeft size="25px" />
               Prev
             </Button>
-
-            {currentQuestion === Questions.length - 1 ? (
-              <Button bg="limegreen" disable={false} onClick={GoToNextQuestion}>
-                Finish
-                <MdKeyboardArrowRight size="25px" />
-              </Button>
-            ) : (
-              <Button bg="limegreen" disable={false} onClick={GoToNextQuestion}>
-                Next
-                <MdKeyboardArrowRight size="25px" />
-              </Button>
-            )}
+            {showNext ? (
+              currentQuestion === Questions.length - 1 ? (
+                <Button
+                  bg="limegreen"
+                  disable={false}
+                  onClick={GoToNextQuestion}
+                >
+                  Finish
+                  <MdKeyboardArrowRight size="25px" />
+                </Button>
+              ) : (
+                <Button
+                  bg="limegreen"
+                  disable={false}
+                  onClick={GoToNextQuestion}
+                >
+                  Next
+                  <MdKeyboardArrowRight size="25px" />
+                </Button>
+              )
+            ) : null}
           </div>
         </>
       )}
